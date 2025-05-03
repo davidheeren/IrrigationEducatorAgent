@@ -1,20 +1,33 @@
 from dotenv import load_dotenv
-import os
-import openai
 import json
+from agents import Agent, Runner
 
 # Load environment variables from .env file
 load_dotenv()
 
-api_key = os.getenv("OPENAI_API_KEY")
-openai.api_key = api_key
-
-print("Hello World")
-print(f"API: {api_key}")
-
 with open("config/agent_config.json", "r") as acf:
     agent_config = json.load(acf)
 
-# unknown is the default string if the json object does not contain the key
-agent_name = agent_config.get("name", "unknown")
-print(f"agent name: {agent_name}")
+agent = Agent(
+    name=agent_config["name"],
+    instructions=agent_config["instructions"],
+    model=agent_config["model"],
+)
+
+seperator = "-" * 50
+print(f"\nWelcome to '{agent.name}', your terminal AI assistant")
+print("Enter 'q' to quit")
+
+response = None
+while True:
+    print(seperator)
+    prompt = input("Prompt: ")
+    if prompt.strip().lower() == "q":
+        break
+    if response:
+        response = Runner.run_sync(
+            agent, prompt, previous_response_id=response.last_response_id
+        )
+    else:
+        response = Runner.run_sync(agent, prompt)
+    print(f"~\nResponse: {response.final_output}")
