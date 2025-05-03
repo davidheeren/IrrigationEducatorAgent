@@ -1,2 +1,74 @@
+# Irrigation Educator Agent
 
-### This is a Header
+The **Irrigation Educator Agent** is a terminal-based AI assistant designed to support irrigation education and decision-making in Nebraska and beyond. It provides plain-language explanations, practical recommendations, and guided support for students, educators, and agricultural producers.
+
+## Features
+
+- Conversational AI agent powered by OpenAI
+- Tailors responses based on user type (e.g., student, farmer)
+- Pulls information from primary and secondary irrigation documents
+- Provides example calculations and explains irrigation management concepts
+- Supports file search and web search tools
+
+## Getting Started
+
+### Requirements
+
+- Python 3.10+
+- (Optional) Virtual environment
+- Look in requirements.txt
+
+### Installation
+
+1. Clone the repo:
+    ```powershell
+    git clone https://github.com/your-user/irrigation-educator-agent.git
+    cd irrigation-educator-agent
+    ```
+
+2. Create and activate a virtual environment:
+    ```powershell
+    python -m venv .venv
+    .venv\Scripts\activate
+    ```
+
+3. Install dependencies:
+    ```powershell
+    pip install -r requirements.txt
+    ```
+
+### Run the Agent
+
+1. Run
+    ```powershell
+    python scripts/main.py
+    ```
+
+## Configuration
+
+The agent is configured via JSON in `config/agent_config.json`.  
+You can enable or disable tools such as:
+
+- **File search**
+- **Web search**
+- **Custom knowledge sources**
+
+### Example config snippet
+
+```json
+"tools": {
+  "web_search": {
+    "enabled": true
+  },
+  "file_search": {
+    "enabled": true,
+    "vector_id": "your-vector-store-id"
+  }
+}
+```
+
+## Notes
+
+- This agent uses the **OpenAI Assistants API** and requires an API key.
+- **Markdown formatting** is supported in responses.
+
