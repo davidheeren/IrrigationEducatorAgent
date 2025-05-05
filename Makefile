@@ -12,7 +12,7 @@ setup:
 
 run: $(VENV_DIR)/Scripts/activate
 	@echo "Running main script..."
-	@$(VENV_DIR)/Scripts/python scripts\main.py
+	@$(VENV_DIR)/Scripts/python main.py
 # @echo -e "\n"
 
 help:

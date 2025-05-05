@@ -1,9 +1,10 @@
 from typing import List
 from dotenv import load_dotenv
 import json
-from agents import Agent, FileSearchTool, Tool, WebSearchTool
+from agents import Agent, FileSearchTool, Tool, WebSearchTool, function_tool
 import src.helper
 import asyncio
+import geocoder
 
 
 async def main():
@@ -23,6 +24,13 @@ async def main():
     await run_agent(agent)
 
 
+@function_tool
+async def get_user_location() -> str:
+    print("---GETTING USER LOCATION---")
+    g = geocoder.ip("me")
+    return str(g)
+
+
 def configure_tools(agent_config) -> List[Tool]:
     tools = []
     file_search_config = agent_config["tools"]["file_search"]
@@ -38,6 +46,8 @@ def configure_tools(agent_config) -> List[Tool]:
     web_search_config = agent_config["tools"]["web_search"]
     if web_search_config["enabled"]:
         tools.append(WebSearchTool())
+
+    tools.append(get_user_location)
 
     return tools
 
