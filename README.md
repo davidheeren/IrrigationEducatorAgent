@@ -22,8 +22,8 @@ The **Irrigation Educator Agent** is a terminal-based AI assistant designed to s
 
 1. Clone the repo:
     ```powershell
-    git clone https://github.com/your-user/irrigation-educator-agent.git
-    cd irrigation-educator-agent
+    git clone https://github.com/davidheeren/IrrigationEducatorAgent.git
+    cd IrrigationEducatorAgent
     ```
 
 2. Create and activate a virtual environment:
@@ -37,11 +37,16 @@ The **Irrigation Educator Agent** is a terminal-based AI assistant designed to s
     pip install -r requirements.txt
     ```
 
+4. Create API key file:
+    ```powershell
+    New-Item .env -Value "OPENAI_API_KEY=your-openai-api-key-here"
+    ```
+
 ### Run the Agent
 
 1. Run
     ```powershell
-    python scripts/main.py
+    python main.py
     ```
 
 ## Configuration
@@ -49,23 +54,11 @@ The **Irrigation Educator Agent** is a terminal-based AI assistant designed to s
 The agent is configured via JSON in `config/agent_config.json`.  
 You can enable or disable tools such as:
 
+- **GPT api settings**
 - **File search**
 - **Web search**
-- **Custom knowledge sources**
+- **Custom functions**
 
-### Example config snippet
-
-```json
-"tools": {
-  "web_search": {
-    "enabled": true
-  },
-  "file_search": {
-    "enabled": true,
-    "vector_id": "your-vector-store-id"
-  }
-}
-```
 
 ## Notes
 
