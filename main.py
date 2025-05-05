@@ -1,7 +1,14 @@
 from typing import List
 from dotenv import load_dotenv
 import json
-from agents import Agent, FileSearchTool, Tool, WebSearchTool, function_tool
+from agents import (
+    Agent,
+    FileSearchTool,
+    ModelSettings,
+    Tool,
+    WebSearchTool,
+    function_tool,
+)
 import src.helper
 import asyncio
 import geocoder
@@ -14,11 +21,18 @@ async def main():
 
     tools = configure_tools(agent_config)
 
+    settings = ModelSettings(
+        temperature=agent_config["temperature"],
+        max_tokens=agent_config["max_tokens"],
+        truncation="auto",
+    )
+
     agent = Agent(
         name=agent_config["name"],
         instructions=agent_config["instructions"],
         model=agent_config["model"],
         tools=tools,
+        model_settings=settings,
     )
 
     await run_agent(agent)
@@ -65,9 +79,8 @@ async def run_agent(agent: Agent):
             break
 
         prev_id = response.last_response_id if response else None
-        # response = Runner.run_sync(agent, prompt, previous_response_id=prev_id)
-        print("~")
-        await src.helper.run_and_print_agent_streamed(agent, prompt, prev_id)
+        print("~\nResponse: ", end="")
+        response = await src.helper.run_and_print_agent_streamed(agent, prompt, prev_id)
 
 
 if __name__ == "__main__":
