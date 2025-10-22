@@ -7,18 +7,26 @@ from pathlib import Path
 from src import agent_helper, path_helper
 from agents import Runner, Agent
 
+DELIMTITER = "|||"
 
-def translate(agent: Agent, language: str, caption: str, prev_caption: str, next_caption: str) -> str:
-    # prompt = f"""
-    #     Translate the following caption text into the {language} language.
-    #     Do not translate the previous and next captions. Only use them for context.
-    #     Previous: {prev_caption}
-    #     Caption: {caption}
-    #     Next: {next_caption}
-    # """
-    # return Runner.run_sync(agent, prompt).final_output
-    time.sleep(1)
-    return "".join(c.swapcase() if c != "\f" else c for c in caption)
+
+def translate(agent: Agent, language: str, caption: str, args) -> str:
+    prompt = f"""
+        The following text contains multiple captions separated by the string {DELIMTITER}.
+        Translate each caption into the {language} language.
+        The ONLY occurrences of {DELIMTITER} in your output MUST be as separators between translated captions. You MUST ensure that the number of {DELIMTITER} strings in your output is EXACTLY one less than the number of captions provided in the input. **IMPORTANT: Each translated caption MUST retain its original internal newlines. Do NOT remove or replace newlines within a caption.**
+
+        Caption text to translate:
+        {caption}
+    """
+    if (args.test):
+        time.sleep(.75)
+        # Split the caption by the delimiter, swap case of each part, then re-join
+        parts = caption.split(DELIMTITER)
+        translated_parts = [p.swapcase() for p in parts]
+        return DELIMTITER.join(translated_parts)
+    else:
+        return Runner.run_sync(agent, prompt).final_output
 
 
 def get_args():
@@ -27,17 +35,24 @@ def get_args():
 
     # Positional args use metavar whats shown and optional args use dest
 
-    parser.add_argument(
-        "input_path", help="The path to the vtt file", metavar="input-path")
+    parser.add_argument("input_paths",
+                        nargs='+',  # one or more args
+                        help="List paths to the vtt files",
+                        metavar="input-paths")
 
     parser.add_argument("-o", "--output-dir",
                         help="The path to the output directory",
                         dest="output_dir",
                         default="./")
 
+    parser.add_argument("-t", "--test",
+                        help="Flag to not call the api. Flips character case instead",
+                        action="store_true")
+
     parser.add_argument("-l", "--languages",
                         help="List of languages seperated by commas",
-                        default="Spanish,French")
+                        # default = "Spanish,French")
+                        default="Spanish")
 
     parser.add_argument("-n", "--num-lines",
                         help="How many lines of text are to be translated in one request",
@@ -49,7 +64,6 @@ def get_args():
 
 
 def main():
-
     args = get_args()
 
     output_dir = Path(args.output_dir).resolve()
@@ -58,45 +72,63 @@ def main():
 
     agent = agent_helper.get_and_configure_agent(config_path, [])
 
-    for lang_index, language in enumerate(languages):
-        vtt = webvtt.read(args.input_path)
+    # how many captions above and below the current block for context
+    num_padding = 1
 
-        for i in range(0, len(vtt), args.num_lines):
-            block = vtt[i:i+args.num_lines]
-            caption = "\f".join(c.text for c in block)
-            prev_caption = vtt[i-1].text if i > 0 else ""
-            next_caption = vtt[i+args.num_lines].text if i + \
-                args.num_lines < len(vtt) else ""
+    progress = 0
 
-            # print(f"PREVIOUS: {prev_caption}")
-            # print(f"CURRENT: {caption}")
-            # print(f"NEXT: {next_caption}")
-            # print("--------")
+    # find total captions for progress
+    total_captions = 0
+    for input_path in args.input_paths:
+        for language in languages:
+            vtt = webvtt.read(input_path)
+            total_captions += len(webvtt.read(input_path))
 
-            chunk_num = i // args.num_lines
-            progress = 100 * (lang_index + chunk_num /
-                              len(languages)) / len(languages)
-            print(f"Progress: {progress:.1f}%", end="\r")
+    for input_index, input_path in enumerate(args.input_paths):
+        for lang_index, language in enumerate(languages):
+            vtt = webvtt.read(input_path)
 
-            translation = translate(
-                agent, language, caption, prev_caption, next_caption)
-            translated_lines = translation.split("\f")
+            for i in range(0, len(vtt), args.num_lines):
+                # list slices end will clamp to length but if start is negative it will wrap
+                # end in list slices are exclusive
 
-            for c, t in zip(block, translated_lines):
-                c.text = t
+                # start and end vars for the captions block including padding
+                start = max(0, i - num_padding)
+                end = i + args.num_lines + num_padding
+                block = vtt[start:end]
 
-        # for caption in vtt:
-            # print(caption.identifier)
-            # print(caption.start)
-            # print(caption.end)
-            # caption.text += f" -- test::{language}"
-            # print(caption.text)
-            # print(caption.voice)
+                # join all captions in block sperated by delimiter
+                caption = DELIMTITER.join(c.text for c in block)
 
-        file_name = Path(args.input_path).stem + f"_{language}.vtt"
-        path = output_dir / file_name
-        print(f"Saving file: {path}")
-        vtt.save(path)
+                # start and end for the non padding slice of the current block
+                start_range = i - start
+                end_range = min(len(vtt), i + args.num_lines) - start
+
+                # print progress
+                print(f"\rProgress: {progress:5.0f}%", end="\r", flush=True)
+                progress += (end_range - start_range) / total_captions * 100
+                progress = min(100, progress)
+
+                translation = translate(agent, language, caption, args)
+                # split on delimiter and strip leading and trailing whitespace
+                translated_lines = [
+                    line.strip() for line in translation.split(DELIMTITER)]
+
+                # double check same amount of delimiters. AI can be finicky
+                if (len(translated_lines) != len(block)):
+                    print(f"ERROR: Mismatch in delimiter count. AI has messed up. Aborting current file: {
+                        input_path} language: {language}")
+                    return
+
+                # update the vtt object
+                for c, t in zip(block[start_range:end_range], translated_lines[start_range:end_range]):
+                    c.text = t
+
+            # save vtt object to file
+            file_name = output_dir / f"{Path(input_path).stem}_{language}.vtt"
+            path = output_dir / file_name
+            print(f"Saving file: {path}")
+            vtt.save(path)
 
 
 if __name__ == "__main__":
