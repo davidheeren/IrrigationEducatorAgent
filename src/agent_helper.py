@@ -9,17 +9,33 @@ from agents import (
     WebSearchTool,
     function_tool,
 )
-import src.helper
-import asyncio
-import geocoder
+
+from agents.result import RunResultBase
+from openai.types.responses import ResponseTextDeltaEvent
+from agents import Runner
 
 
-async def main():
+async def run_and_print_agent_streamed(
+    agent: Agent, prompt: str, previous_response_id: str | None
+) -> RunResultBase:
+    response = Runner.run_streamed(
+        agent, prompt, previous_response_id=previous_response_id
+    )
+    async for event in response.stream_events():
+        if event.type == "raw_response_event" and isinstance(
+            event.data, ResponseTextDeltaEvent
+        ):
+            print(event.data.delta, end="", flush=True)
+    print()
+    return response
+
+
+def get_and_configure_agent(config_path: str, function_tools: List[function_tool]) -> Agent:
     load_dotenv()
-    with open("config/agent_config.json", "r") as acf:
+    with open(config_path, "r") as acf:
         agent_config = json.load(acf)
 
-    tools = configure_tools(agent_config)
+    tools = _configure_tools(agent_config, function_tools)
 
     settings = ModelSettings(
         temperature=agent_config["temperature"],
@@ -27,7 +43,7 @@ async def main():
         truncation="auto",
     )
 
-    agent = Agent(
+    return Agent(
         name=agent_config["name"],
         instructions=agent_config["instructions"],
         model=agent_config["model"],
@@ -35,17 +51,8 @@ async def main():
         model_settings=settings,
     )
 
-    await run_agent(agent)
 
-
-@function_tool
-async def get_user_location() -> str:
-    print("---GETTING USER LOCATION---")
-    g = geocoder.ip("me")
-    return str(g)
-
-
-def configure_tools(agent_config) -> List[Tool]:
+def _configure_tools(agent_config: str, function_tools: List[function_tool]) -> List[Tool]:
     tools = []
     file_search_config = agent_config["tools"]["file_search"]
     if file_search_config["enabled"]:
@@ -61,27 +68,6 @@ def configure_tools(agent_config) -> List[Tool]:
     if web_search_config["enabled"]:
         tools.append(WebSearchTool())
 
-    tools.append(get_user_location)
+    tools.extend(function_tools)
 
     return tools
-
-
-async def run_agent(agent: Agent):
-    seperator = "-" * 50
-    print(f"\nWelcome to '{agent.name}', your terminal AI assistant")
-    print("Enter 'q' to quit")
-
-    response = None
-    while True:
-        print(seperator)
-        prompt = input("Prompt: ")
-        if prompt.strip().lower() == "q":
-            break
-
-        prev_id = response.last_response_id if response else None
-        print("~\nResponse: ", end="")
-        response = await src.helper.run_and_print_agent_streamed(agent, prompt, prev_id)
-
-
-if __name__ == "__main__":
-    asyncio.run(main())

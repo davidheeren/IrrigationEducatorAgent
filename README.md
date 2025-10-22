@@ -15,37 +15,60 @@ The **Irrigation Educator Agent** is a terminal-based AI assistant designed to s
 ### Requirements
 
 - Python 3.10+
+- git
 - (Optional) Virtual environment
 - Look in requirements.txt
 
 ### Installation
 
 1. Clone the repo:
-    ```powershell
+
+    **powershell or bash**
+    ```bash
     git clone https://github.com/davidheeren/IrrigationEducatorAgent.git
     cd IrrigationEducatorAgent
     ```
 
 2. Create and activate a virtual environment:
+
+    **powershell**
     ```powershell
     python -m venv .venv
     .venv\Scripts\activate
     ```
 
+    **bash**
+    ```bash
+    python -m venv .venv
+    source .venv/bin/activate 
+    ```
+
 3. Install dependencies:
-    ```powershell
+
+    **powershell or bash**
+    ```bash
     pip install -r requirements.txt
     ```
 
 4. Create API key file:
+
+    **powershell**
     ```powershell
     New-Item .env -Value "OPENAI_API_KEY=your-openai-api-key-here"
     ```
 
+    **bash**
+    ```bash 
+    echo "OPENAI_API_KEY=your-openai-api-key-here" > .env
+    ```
+
+
 ### Run the Agent
 
 1. Run
-    ```powershell
+
+    **powershell or bash**
+    ```bash
     python main.py
     ```
 
@@ -54,14 +77,16 @@ The **Irrigation Educator Agent** is a terminal-based AI assistant designed to s
 The agent is configured via JSON in `config/agent_config.json`.  
 You can enable or disable tools such as:
 
-- **GPT api settings**
-- **File search**
-- **Web search**
-- **Custom functions**
+- GPT api settings
+- File search
+- Web search
+- Custom functions
 
+## Usage
+
+- Type 'q' to quit
 
 ## Notes
 
-- This agent uses the **OpenAI Assistants API** and requires an API key.
+- This agent uses the OpenAI Assistants API and requires an API key.
 - **Markdown formatting** is supported in responses.
-
