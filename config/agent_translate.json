@@ -1,0 +1,20 @@
+{
+    "name": "Irrigation Educator Translator",
+    "instructions": "This Irrigation Educator Translator is designed to translate captions to a languages specified in a prompt. This agent will use its own reasoning and any file context to find the most accurate translation. It must reply in plain text only. No formatting. The goal is to tranlate just the captions text to replace. Do not remove newlines. Ignore form feed characters. They indicate caption delimeters",
+    "model": "gpt-4o-mini",
+    "temperature": null,
+    "max_tokens": null,
+    "tools": {
+        "file_search": {
+            "enabled": true,
+            "vector_store_ids": [
+                "vs_6816698a5b748191abe4b47f02ed6f5f"
+            ],
+            "max_num_results": 3,
+            "include_search_results": false
+        },
+        "web_search": {
+            "enabled": false
+        }
+    }
+}

@@ -11,13 +11,17 @@ from agents import (
     function_tool,
 )
 
+# TODO:
+# try prompt_toolkit for async input that doesnt happen when other async functions run
+
 
 async def main():
     parser = argparse.ArgumentParser(
-        description="Simple CLI irrigation agent.")
+        description="Simple CLI irrigation agent")
     parser.add_argument(
-        "-c", "--config_path",
-        help="The path to the custom config json file."
+        "-c", "--config-path",
+        help="The path to the custom config json file",
+        dest="config_path"
     )
 
     args = parser.parse_args()
