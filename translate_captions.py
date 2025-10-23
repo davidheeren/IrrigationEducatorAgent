@@ -51,12 +51,12 @@ def get_args():
 
     parser.add_argument("-l", "--languages",
                         help="List of languages seperated by commas",
-                        # default = "Spanish,French")
-                        default="Spanish")
+                        # default="Spanish")
+                        default="Spanish,French,Portuguese")
 
-    parser.add_argument("-n", "--num-lines",
-                        help="How many lines of text are to be translated in one request",
-                        dest="num_lines",
+    parser.add_argument("-n", "--num-captions",
+                        help="Number of captions to be translated in one request",
+                        dest="num_captions",
                         type=int,
                         default="5")
 
@@ -88,13 +88,13 @@ def main():
         for lang_index, language in enumerate(languages):
             vtt = webvtt.read(input_path)
 
-            for i in range(0, len(vtt), args.num_lines):
+            for i in range(0, len(vtt), args.num_captions):
                 # list slices end will clamp to length but if start is negative it will wrap
                 # end in list slices are exclusive
 
                 # start and end vars for the captions block including padding
                 start = max(0, i - num_padding)
-                end = i + args.num_lines + num_padding
+                end = i + args.num_captions + num_padding
                 block = vtt[start:end]
 
                 # join all captions in block sperated by delimiter
@@ -102,7 +102,7 @@ def main():
 
                 # start and end for the non padding slice of the current block
                 start_range = i - start
-                end_range = min(len(vtt), i + args.num_lines) - start
+                end_range = min(len(vtt), i + args.num_captions) - start
 
                 # print progress
                 print(f"\rProgress: {progress:5.0f}%", end="\r", flush=True)

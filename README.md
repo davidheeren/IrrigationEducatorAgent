@@ -12,81 +12,28 @@ The **Irrigation Educator Agent** is a terminal-based AI assistant designed to s
 
 ## Getting Started
 
-### Requirements
+See [setup.md](./docs/setup.md) for installation instructions
 
-- Python 3.10+
-- git
-- (Optional) Virtual environment
-- Look in requirements.txt
+## Running the Educator Agent
 
-### Installation
+For an interactive chat experience  
+See [educator_agent.md](./docs/educator_agent.md) for instructions on how to run the agent
 
-1. Clone the repo:
+## Running the Translate Captions
 
-    **powershell or bash**
-    ```bash
-    git clone https://github.com/davidheeren/IrrigationEducatorAgent.git
-    cd IrrigationEducatorAgent
-    ```
-
-2. Create and activate a virtual environment:
-
-    **powershell**
-    ```powershell
-    python -m venv .venv
-    .venv\Scripts\activate
-    ```
-
-    **bash**
-    ```bash
-    python -m venv .venv
-    source .venv/bin/activate 
-    ```
-
-3. Install dependencies:
-
-    **powershell or bash**
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4. Create API key file:
-
-    **powershell**
-    ```powershell
-    New-Item .env -Value "OPENAI_API_KEY=your-openai-api-key-here"
-    ```
-
-    **bash**
-    ```bash 
-    echo "OPENAI_API_KEY=your-openai-api-key-here" > .env
-    ```
-
-
-### Run the Agent
-
-1. Run
-
-    **powershell or bash**
-    ```bash
-    python main.py
-    ```
+For translating .vtt caption files to other languages  
+See [translate_captions.md](./docs/translate_captions.md) for instructions on how to run this script
 
 ## Configuration
 
-The agent is configured via JSON in `config/agent_config.json`.  
-You can enable or disable tools such as:
-
-- GPT api settings
-- File search
-- Web search
-- Custom functions
-
-## Usage
-
-- Type 'q' to quit
+See [config.md](./docs/config.md) for instructions on configure the agent
 
 ## Notes
 
-- This agent uses the OpenAI Assistants API and requires an API key.
+- This agent uses the OpenAI Agents API and requires an API key.
 - **Markdown formatting** is supported in responses.
+
+## Links
+
+[SDK Documentation](https://openai.github.io/openai-agents-python/)  
+[SDK Github](https://github.com/openai/openai-agents-python)
