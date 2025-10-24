@@ -5,6 +5,7 @@ from src import agent_helper, path_helper
 import argparse
 import asyncio
 import geocoder
+from pathlib import Path
 
 from agents import (
     Agent,
@@ -13,23 +14,28 @@ from agents import (
 
 # TODO:
 # try prompt_toolkit for async input that doesnt happen when other async functions run
+# bc now when streaming results, you can still type to stdin
 
 
 async def main():
-    parser = argparse.ArgumentParser(
-        description="Simple CLI irrigation agent")
-    parser.add_argument(
-        "-c", "--config-path",
-        help="The path to the custom config json file",
-        dest="config_path"
-    )
+    args = get_args()
+    if not Path(args.config_path).is_file():
+        print(f"Error: config path {args.config_path} does not exist. Exiting")
+        return
 
-    args = parser.parse_args()
-    path = args.config_path if args.config_path else path_helper.get_config_path(
-        __file__, "agent_default.json")
-
-    agent = agent_helper.get_and_configure_agent(path, [get_user_location])
+    agent = agent_helper.get_and_configure_agent(args.config_path, [get_user_location])
     await run_agent(agent)
+
+
+def get_args():
+    parser = argparse.ArgumentParser(description="Simple CLI irrigation agent")
+
+    parser.add_argument("-c", "--config-path",
+                        help="The path to the custom config json file",
+                        dest="config_path",
+                        default=path_helper.get_config_path(__file__, "agent_default.json"))
+
+    return parser.parse_args()
 
 
 @function_tool

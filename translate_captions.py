@@ -67,8 +67,16 @@ def main():
     args = get_args()
 
     output_dir = Path(args.output_dir).resolve()
+    if not output_dir.is_dir():
+        print(f"Error: output directory {output_dir} does not exist. Exiting")
+        return
+
     languages = args.languages.replace(" ", "").split(",")
+
     config_path = path_helper.get_config_path(__file__, "agent_translate.json")
+    if not Path(config_path).is_file():
+        print(f"Error: config path {config_path} does not exist. Exiting")
+        return
 
     agent = agent_helper.get_and_configure_agent(config_path, [])
 
@@ -77,14 +85,24 @@ def main():
 
     progress = 0
 
+    ignore_paths = set()
+
     # find total captions for progress
     total_captions = 0
     for input_path in args.input_paths:
+        if not Path(input_path).is_file():
+            ignore_paths.add(input_path)
+            continue
+
         for language in languages:
             vtt = webvtt.read(input_path)
             total_captions += len(webvtt.read(input_path))
 
     for input_index, input_path in enumerate(args.input_paths):
+        if input_path in ignore_paths:
+            print(f"Error: path '{input_path}' does not exist. Skipping to next path")
+            continue
+
         for lang_index, language in enumerate(languages):
             vtt = webvtt.read(input_path)
 
@@ -101,6 +119,7 @@ def main():
                 caption = DELIMTITER.join(c.text for c in block)
 
                 # start and end for the non padding slice of the current block
+                # took forever to figure out the logic here. there might be a better way to structure this
                 start_range = i - start
                 end_range = min(len(vtt), i + args.num_captions) - start
 

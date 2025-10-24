@@ -16,9 +16,8 @@ from openai.types.responses import ResponseTextDeltaEvent
 from agents import Runner
 
 
-async def run_and_print_agent_streamed(
-    agent: Agent, prompt: str, previous_response_id: str | None
-) -> RunResultBase:
+# print response from API as tokens are streamed
+async def run_and_print_agent_streamed(agent: Agent, prompt: str, previous_response_id: str | None) -> RunResultBase:
     response = Runner.run_streamed(
         agent, prompt, previous_response_id=previous_response_id
     )
@@ -31,6 +30,7 @@ async def run_and_print_agent_streamed(
     return response
 
 
+# make new agent from a config path and function tools
 def get_and_configure_agent(config_path: str, function_tools: List[function_tool]) -> Agent:
     load_dotenv()
     with open(config_path, "r") as acf:
@@ -53,6 +53,7 @@ def get_and_configure_agent(config_path: str, function_tools: List[function_tool
     )
 
 
+# add tool capabilites to agent
 def _configure_tools(agent_config: str, function_tools: List[function_tool]) -> List[Tool]:
     tools = []
     file_search_config = agent_config["tools"]["file_search"]
