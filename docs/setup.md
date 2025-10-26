@@ -5,7 +5,6 @@
 - Python 3.10+
 - Python pip and venv
 - Git
-- Look in requirements.txt
 
 ### Installation
 

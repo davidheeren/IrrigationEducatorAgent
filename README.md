@@ -31,7 +31,8 @@ See [config.md](./docs/config.md) for instructions on configure the agent
 ## Notes
 
 - This agent uses the OpenAI Agents API and requires an API key.
-- **Markdown formatting** is supported in responses.
+- **Markdown formatting** is supported in responses.  
+- This project is a test for the openai agent sdk, not a real product. This is also why we have the translator script included
 
 ## Links
 

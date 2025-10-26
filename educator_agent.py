@@ -38,6 +38,7 @@ def get_args():
     return parser.parse_args()
 
 
+# in real world this is a privacy concern but for testing ok
 @function_tool
 async def get_user_location() -> str:
     print("---GETTING USER LOCATION---")
