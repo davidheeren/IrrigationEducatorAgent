@@ -12,21 +12,22 @@ The **Irrigation Educator Agent** is a terminal-based AI assistant designed to s
 
 ## Getting Started
 
-See [setup.md](./docs/setup.md) for installation instructions
+For installation instructions, please see the guide for your operating system:
+
+- [Windows Setup Guide](./docs/setup_windows.md)
+- [macOS & Linux Setup Guide](./docs/setup_macos_linux.md)
 
 ## Running the Educator Agent
 
-For an interactive chat experience  
-See [educator_agent.md](./docs/educator_agent.md) for instructions on how to run the agent
+For an interactive chat experience, see the [Educator Agent Instructions](./docs/educator_agent.md).
 
-## Running the Translate Captions
+## Translating Captions
 
-For translating .vtt caption files to other languages  
-See [translate_captions.md](./docs/translate_captions.md) for instructions on how to run this script
+For translating .vtt caption files to other languages, see the [Translate Captions Instructions](./docs/translate_captions.md).
 
 ## Configuration
 
-See [config.md](./docs/config.md) for instructions on configure the agent
+For configuration instructions, see the [Configuration Guide](./docs/config.md).
 
 ## Notes
 
