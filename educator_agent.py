@@ -15,6 +15,7 @@ from agents import (
 # TODO:
 # try prompt_toolkit for async input that doesnt happen when other async functions run
 # bc now when streaming results, you can still type to stdin
+# catch api errors
 
 
 async def main():

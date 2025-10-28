@@ -30,8 +30,7 @@ def translate(agent: Agent, language: str, caption: str, args) -> str:
 
 
 def get_args():
-    parser = argparse.ArgumentParser(
-        description="Simple CLI tool to tranlate .vtt files into other languages using the Irrigation Educator Agent")
+    parser = argparse.ArgumentParser(description="Simple CLI tool to tranlate .vtt files into other languages using the Irrigation Educator Agent")
 
     # Positional args use metavar whats shown and optional args use dest
 
@@ -52,13 +51,13 @@ def get_args():
     parser.add_argument("-l", "--languages",
                         help="List of languages seperated by commas",
                         # default="Spanish")
-                        default="Spanish,French,Portuguese")
+                        default="Spanish,French,Portuguese,Arabic,Chinese,Hindi,Swahili,German,Persian,Russian")
 
     parser.add_argument("-n", "--num-captions",
                         help="Number of captions to be translated in one request",
                         dest="num_captions",
                         type=int,
-                        default="5")
+                        default="20")
 
     return parser.parse_args()
 

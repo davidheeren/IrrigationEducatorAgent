@@ -1,0 +1,232 @@
+1
+00:00:00,000 --> 00:00:03,720
+All right, welcome to class today.
+In our lab, we're going to do
+
+2
+00:00:03,720 --> 00:00:07,960
+a pumps lab, so this will
+also come from the chapter 8 material.
+
+3
+00:00:08,700 --> 00:00:10,780
+You might remember last
+week we did pipeline
+
+4
+00:00:10,780 --> 00:00:13,940
+hydraulics, so this time
+we'll do pump hydraulics.
+
+5
+00:00:14,880 --> 00:00:16,900
+And we want to take
+a few minutes here to kind
+
+6
+00:00:16,900 --> 00:00:19,600
+of set up some of
+the measurements that we'll be taking.
+
+7
+00:00:20,180 --> 00:00:22,800
+You see it best in the lab, but I think
+it helps to see it
+
+8
+00:00:22,800 --> 00:00:25,600
+also in a concept diagram first.
+
+9
+00:00:26,200 --> 00:00:30,860
+So we've got a couple
+of different sizes of pumps in
+
+10
+00:00:30,860 --> 00:00:33,980
+the lab, and we're going
+to start with our large pump.
+
+11
+00:00:40,150 --> 00:00:43,310
+And we're going to measure data.
+If you want to look at
+
+12
+00:00:43,310 --> 00:00:46,590
+the handout, data sheet 1 is
+what we'll be talking about now.
+
+13
+00:00:47,350 --> 00:00:49,970
+We're going to measure
+the pressure, for example,
+
+14
+00:00:50,370 --> 00:00:56,050
+the flow rate. It's
+a variable frequency drive pump.
+
+15
+00:00:56,050 --> 00:01:02,710
+So we're going to change the speed on the
+motor, and that will
+
+16
+00:01:02,710 --> 00:01:04,269
+change how the pump behaves.
+
+17
+00:01:05,930 --> 00:01:09,510
+And then we want
+to determine the total dynamic
+
+18
+00:01:09,510 --> 00:01:12,830
+head and the power
+at several different flow conditions.
+
+19
+00:01:13,350 --> 00:01:21,650
+So just by a quick review, for total
+dynamic head, we're going
+
+20
+00:01:21,650 --> 00:01:29,350
+to calculate that as
+the lift, plus we want to account for
+
+21
+00:01:29,350 --> 00:01:31,670
+the pressure at the outlet of the pump.
+
+22
+00:01:34,040 --> 00:01:40,080
+So pressure at the outlet,
+and that'll be in PSI. We're
+
+23
+00:01:40,080 --> 00:01:43,860
+going to use TDH in
+feet, so we'll need to convert.
+
+24
+00:01:44,880 --> 00:01:48,280
+And to do that, you
+might remember using the unit weight
+
+25
+00:01:48,280 --> 00:01:53,580
+of water, so gamma. So
+in this case, 1 over gamma.
+
+26
+00:01:54,180 --> 00:01:57,640
+In last week's lab,
+we measured gamma, and it
+
+27
+00:01:57,640 --> 00:02:02,900
+turned out to be about 0.433 feet per PSI.
+
+28
+00:02:03,940 --> 00:02:13,980
+In this case, we're
+starting with PSI per feet.
+
+29
+00:02:16,620 --> 00:02:25,480
+This time we're going to use
+2.31, and that's feet per PSI.
+
+30
+00:02:34,730 --> 00:02:39,870
+Okay, so we'll measure P out in PSI.
+The units will cancel, so we'll be in
+
+31
+00:02:39,870 --> 00:02:44,530
+feet. We'll add the lift, which is in
+feet, and that will give us the TDH.
+
+32
+00:02:45,430 --> 00:02:50,090
+So we'll make a diagram
+of how we'll collect that
+
+33
+00:02:50,090 --> 00:02:55,890
+data. This will be a
+vertical cross-section of
+
+34
+00:02:55,890 --> 00:02:57,290
+our pumping system.
+
+35
+00:02:57,850 --> 00:03:02,970
+So it's really our sump
+that's our underground storage reservoir.
+
+36
+00:03:03,310 --> 00:03:13,920
+And then we have our pump
+with an impeller here and an inlet.
+
+37
+00:03:17,750 --> 00:03:22,070
+And so we have flow coming out
+up here. It'll be our flow rate Q.
+
+38
+00:03:24,970 --> 00:03:30,530
+And we have a pressure transducer here,
+or a pressure gauge, I should say.
+
+39
+00:03:34,550 --> 00:03:40,110
+And then one of the important factors
+is the water level in the reservoir.
+
+40
+00:03:40,870 --> 00:03:47,500
+One of the things
+that we'll notice is that
+
+41
+00:03:47,500 --> 00:03:50,560
+that water level changes
+when we start the pump.
+
+42
+00:03:51,600 --> 00:03:55,100
+And this is interesting partly
+because it's the same in groundwater.
+
+43
+00:03:55,340 --> 00:03:58,200
+When you first turn a pump on,
+that water table starts
+
+44
+00:03:58,200 --> 00:03:59,680
+high and then lowers.
+
+45
+00:04:00,580 --> 00:04:04,860
+And it's not as much here, but it's
+enough we want to pay attention to that.
+
+46
+00:04:05,560 --> 00:04:10,340
+So the initial water surface is
+what we call the static water level.
+
+47
+00:04:10,400 --> 00:04:14,040
+And then we let the pump run for a
+couple of minutes, and
+
+48
+00:04:14,040 --> 00:04:17,279
+then eventually it stops changing.
