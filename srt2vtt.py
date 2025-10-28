@@ -6,7 +6,8 @@ import argparse
 
 
 def get_args():
-    parser = argparse.ArgumentParser(description="Convert srt files to vtt")
+    parser = argparse.ArgumentParser(description="Convert srt files to vtt",
+                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser.add_argument("input_paths",
                         nargs='+',  # one or more args

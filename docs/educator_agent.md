@@ -1,20 +1,31 @@
-# Running the Agent
+# Educator Agent
 
-1. Run the agent from the project root directory:
+This script runs the interactive educator agent.
 
-    **powershell or bash**
-    ```bash
-    python educator_agent.py
-    ```
+Once the agent is running, type 'q' to quit.
 
-## Usage
+## Command-Line Examples
 
-- Type 'q' to quit
+### Show Help
 
-## Command-Line Options
+To see all available command-line options, use the `--help` flag:
 
-You can run the agent with the following command-line options:
+```bash
+python educator_agent.py --help
+```
 
-| Option | Long Option   | Description                                    | Default                       |
-|--------|---------------|------------------------------------------------|-------------------------------|
-| `-c`   | `--config-path` | Path to a custom agent configuration JSON file. | `config/agent_default.json`   |
+### Default Usage
+
+Run the agent with the default configuration:
+
+```bash
+python educator_agent.py
+```
+
+### Custom Configuration
+
+Run the agent with a custom agent configuration file:
+
+```bash
+python educator_agent.py --config-path config/agent_pirate.json
+```

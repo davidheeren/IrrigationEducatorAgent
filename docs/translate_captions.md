@@ -2,20 +2,30 @@
 
 This script uses the AI agent to translate WebVTT (`.vtt`) caption files into one or more languages.
 
-## Usage Example
+*Note: If you have SubRip (`.srt`) files, you must first convert them to WebVTT format. See the [SRT to VTT Conversion](srt2vtt.md) documentation.*
 
-To translate a file named `captions.vtt` into Spanish and French, and save the output to a `translated/` directory:
+## Command-Line Examples
+
+### Show Help
+
+To see all available command-line options, use the `--help` flag:
 
 ```bash
-python translate_captions.py captions.vtt -l "Spanish,French" -o translated/
+python translate_captions.py --help
 ```
 
-## Command-Line Options
+### Basic Usage
 
-| Option        | Long Option                      | Description                                           | Default                       |
-|---------------|----------------------------------|-------------------------------------------------------|-------------------------------|
-| `input_paths` | *(positional)*   | One or more paths to the `.vtt` files to translate.   | *(required)*                  |
-| `-o`          | `--output-dir`   | The directory where translated files will be saved.   | `./`                          |
-| `-t`          | `--test`         | Run in test mode without calling the AI API.          | False                      |
-| `-l`          | `--languages`    | Comma-separated list of languages for translation.    | `Spanish,French,Portuguese,Arabic,Chinese,Hindi,Swahili,German,Persian,Russian`   |
-| `-n`          | `--num-captions` | The number of captions to batch in a single request.  | `20`                           |
+Translate a single caption file into the default set of languages:
+
+```bash
+python translate_captions.py captions_test/example.vtt
+```
+
+### Advanced Usage
+
+Translate multiple `.vtt` files using a glob pattern, specify a comma-separated list of languages, and set a custom output directory:
+
+```bash
+python translate_captions.py captions_test/*.vtt -l "Spanish,French" -o translated_captions/
+```

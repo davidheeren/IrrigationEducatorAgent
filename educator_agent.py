@@ -29,7 +29,8 @@ async def main():
 
 
 def get_args():
-    parser = argparse.ArgumentParser(description="Simple CLI irrigation agent")
+    parser = argparse.ArgumentParser(description="Simple CLI irrigation agent",
+                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser.add_argument("-c", "--config-path",
                         help="The path to the custom config json file",

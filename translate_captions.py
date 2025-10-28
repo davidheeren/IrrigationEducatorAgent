@@ -30,7 +30,8 @@ def translate(agent: Agent, language: str, caption: str, args) -> str:
 
 
 def get_args():
-    parser = argparse.ArgumentParser(description="Simple CLI tool to tranlate .vtt files into other languages using the Irrigation Educator Agent")
+    parser = argparse.ArgumentParser(description="Simple CLI tool to tranlate .vtt files into other languages using the Irrigation Educator Agent",
+                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     # Positional args use metavar whats shown and optional args use dest
 

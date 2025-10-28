@@ -32,7 +32,9 @@ See [config.md](./docs/config.md) for instructions on configure the agent
 
 - This agent uses the OpenAI Agents API and requires an API key.
 - **Markdown formatting** is supported in responses.  
-- This project is a test for the openai agent sdk, not a real product. This is also why we have the translator script included
+- This project is a test for the openai agent sdk, not a real product. This is also why we have other features like the translator script included that use the already made architecture  
+- The real benefit of this agent is the file database that has high quality information  
+- I tried to make the docs as user friendly as possible for non-techinal people
 
 ## Links
 
